@@ -1,0 +1,180 @@
+﻿@model AzureCafe.Models.Cafe
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Name</h1>
+<hr />
+
+<p>
+    @Html.DisplayFor(model => model.Description)
+</p>
+<p>
+    @Html.DisplayFor(model => model.Location)
+</p>
+
+<div class="mb-5">
+    <ul class="nav nav-tabs" id="cafeTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="menu-tab" data-bs-toggle="tab" data-bs-target="#nav-cafe-menu" role="tab" aria-controls="menu" aria-selected="true">Menu</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#nav-cafe-reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="cafeContent">
+        <div class="tab-pane fade show active" id="nav-cafe-menu" role="tabpanel" aria-labelledby="menu-tab">
+            @foreach (var item in Model.MenuItems)
+            {
+                <div class="row">
+                    <div class="col-md-10">
+                        <span style="font-size: 1.5em;" class="font-weight-bolder">@Html.DisplayFor(modelItem => item.Name)</span><br/>
+                        @item.Description
+                    </div>
+                    <div class="col-md-2 text-right">
+                        @item.Price.ToString("$0.00")
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="tab-pane fade" id="nav-cafe-reviews" role="tabpanel" aria-labelledby="reviews-tab">
+            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#createReviewModal">
+                Add review
+            </button>
+
+            <table class="table mt-2">
+                <thead>
+                    <tr>
+                        <th>
+                            Review Date
+                        </th>
+                        <th>
+                            Review User
+                        </th>
+                        <th>
+                            Rating
+                        </th>
+                        <th>
+                            Comments
+                        </th>
+                        <th>
+                            Sentiment
+                        </th>
+                        <th>
+                            Thumbnail
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Reviews)
+                    {
+                        <tr>
+                            <td>
+                                @item.ReviewDate.ToString("MM/dd/yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReviewerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comments)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CommentsSentiment)
+                            </td>
+                            <td>
+                                @if(!String.IsNullOrWhiteSpace(item.ReviewPhotoName)){
+                                    var imgPath = ViewBag.BaseImagePath +"/"+ item.ReviewPhotoName +"-thumbnail.jpg";
+                                    <img src="@imgPath" alt="product review thumbnail" />
+                                }                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                </table>
+        </div>
+        
+    </div>
+
+   
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div class="modal fade" id="createReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form asp-action="CreateReview" enctype = "multipart/form-data">            
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create a review</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" name="id" value="@Model.CafeId"/>
+            <div class="container-fluid">
+               <div class="row g-3 mb-2">
+                   <div class="col-md-4">
+                       <label for="reviewerName" class="col-form-label">Your name</label>
+                   </div>
+                   <div class="col-md-8">
+                       <input type="text" id="reviewerName" name="reviewerName" class="form-control" placeholder="Your name">
+                   </div>
+               </div>
+               <div class="row g-3 mb-2">
+                   <div class="col-md-4">
+                     <label for="reviewRating" class="col-form-label">Rating</label>
+                   </div>
+                   <div class="col-md-8">
+
+
+                       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                         <input type="radio" class="btn-check" name="rating" value="1" id="rating1" autocomplete="off" checked>
+                         <label class="btn btn-outline-primary" for="rating1">1</label>
+                       
+                         <input type="radio" class="btn-check" name="rating" value="2" id="rating2" autocomplete="off">
+                         <label class="btn btn-outline-primary" for="rating2">2</label>
+                       
+                         <input type="radio" class="btn-check" name="rating" value="3" id="rating3" autocomplete="off">
+                         <label class="btn btn-outline-primary" for="rating3">3</label>
+                       
+                         <input type="radio" class="btn-check" name="rating" value="4" id="rating4" autocomplete="off">
+                         <label class="btn btn-outline-primary" for="rating4">4</label>
+                       
+                         <input type="radio" class="btn-check" name="rating" value="5" id="rating5" autocomplete="off">
+                         <label class="btn btn-outline-primary" for="rating5">5</label>
+                       </div>
+
+               </div>
+               <div class="row g-3 mb-2">
+                   <div class="col-md-4">
+                       <label for="reviewComments" class="col-form-label">Comments</label>
+                   </div>
+                   <div class="col-md-8">
+                        <textarea class="form-control" id="reviewComments" name="comments" rows="4"></textarea>
+                   </div>
+               </div>
+      
+               <div class="row g-3 mb-2">
+                   <div class="col-md-4">
+                       <label for="reviewPhoto" class="form-label">Upload photo (optional)</label>
+                   </div>
+                   <div class="col-md-8">
+                        <input id="reviewPhoto" name="reviewPhoto" type="file" class="form-control">
+                   </div>
+               </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+          <button type="submit" class="btn btn-primary">Add review</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

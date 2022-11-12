@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AzureCafeSqlDatabase", "AzureCafeSqlDatabase\AzureCafeSqlDatabase.sqlproj", "{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A01BB17-07EE-4BD1-A210-09432DBBEB8D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EFBCC43-2700-425F-90DB-6933655C674E}
+	EndGlobalSection
+EndGlobal
